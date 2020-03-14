@@ -10,7 +10,29 @@ if ($file['size'] > 500000) {
     $uploadOk = 0;
 }
 
-$contents = file_get_contents($file['tmp_name']);
-var_dump($contents);
-
+//
+$data = array_map('str_getcsv', file($file['tmp_name']));
+array_shift($data); // remove column header
 ?>
+<table>
+  <thead>
+    <tr>
+      <th>Train Line</th>
+      <th>Route</th>
+      <th>Run Number</th>
+      <th>Operator ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php
+    foreach ($data as $row) {
+      echo '<tr>';
+      echo '<td>'.$row[0].'</td>';
+      echo '<td>'.$row[1].'</td>';
+      echo '<td>'.$row[2].'</td>';
+      echo '<td>'.$row[3].'</td>';
+      echo '</tr>';
+    }
+    ?>
+  </tbody>
+</table>

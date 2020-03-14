@@ -12,7 +12,14 @@ if ($file['size'] > 500000) {
 
 //
 $data = array_map('str_getcsv', file($file['tmp_name']));
+$headers = $data[0];
 array_shift($data); // remove column header
+array_unique($data);
+function sort_by_run($a, $b){
+  return strcmp($a[2], $b[2]);
+}
+
+usort($data, "sort_by_run");
 ?>
 <table>
   <thead>
@@ -25,13 +32,18 @@ array_shift($data); // remove column header
   </thead>
   <tbody>
     <?php
+    $processed = [];
     foreach ($data as $row) {
-      echo '<tr>';
-      echo '<td>'.$row[0].'</td>';
-      echo '<td>'.$row[1].'</td>';
-      echo '<td>'.$row[2].'</td>';
-      echo '<td>'.$row[3].'</td>';
-      echo '</tr>';
+      if (!in_array($row, $processed)){
+        $processed[] = $row;
+        echo '<tr>';
+
+        echo '<td>'.$row[0].'</td>';
+        echo '<td>'.$row[1].'</td>';
+        echo '<td>'.$row[2].'</td>';
+        echo '<td>'.$row[3].'</td>';
+        echo '</tr>';
+      }
     }
     ?>
   </tbody>

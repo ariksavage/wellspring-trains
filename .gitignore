@@ -1,0 +1,5 @@
+# Ignore database connection values
+config.php
+
+#Server side applications
+phpMyAdmin/*

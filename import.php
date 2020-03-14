@@ -14,7 +14,6 @@ if ($file['size'] > 500000) {
 $data = array_map('str_getcsv', file($file['tmp_name']));
 $headers = $data[0];
 array_shift($data); // remove column header
-array_unique($data);
 function sort_by_run($a, $b){
   return strcmp($a[2], $b[2]);
 }

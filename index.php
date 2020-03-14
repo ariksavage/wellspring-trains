@@ -6,9 +6,9 @@
 	</head>
 	<body>
     <?php 
-    if(file_exists('config.php'){
-      require('config.php');
-      require('library/database.php');
+    if(file_exists('./config.php')){
+      require_once('./config.php');
+      require_once('./library/database.php');
       $db = new Database($db_server, $db_user, $db_pass, $db_database);
     } else {
       echo "No configuration file found. Rename config_example.php to config.php and update its values.";
@@ -16,6 +16,7 @@
     }
     ?>
     <H1>Wellspring Trains App</h1>
+      <h2>Import</h2>
     <form method="post" action="import.php">
       <input type="file" name="import_file"/>
       <input type="submit" value="import"/>

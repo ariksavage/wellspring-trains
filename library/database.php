@@ -14,8 +14,8 @@ class database {
   }
 
   private function connect() {
-    $this->connection = mysqli_connect($this->host, $this->user, $this->password, $this->database);
-    if ($connection) {
+    $this->connection = mysqli_connect($this->host, $this->user, $this->password, $this->db);
+    if ($this->connection) {
       return true;
     } else {
       return false;
@@ -23,8 +23,8 @@ class database {
   }
   protected function test_connection() {
     if ($this->connect()){
-      echo "Success: A proper connection to MySQL was made! The my_db database is great." . PHP_EOL;
-      echo "Host information: " . mysqli_get_host_info($connection) . PHP_EOL;
+      echo "Success: A proper connection to $this->database was made!" . PHP_EOL;
+      echo "Host information: " . mysqli_get_host_info($this->connection) . PHP_EOL;
       $this->disconnect();
       return true;
     } else {
@@ -39,3 +39,4 @@ class database {
     mysqli_close($this->connection);
   }
 }
+?>

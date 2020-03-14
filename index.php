@@ -21,7 +21,7 @@
     ?>
     <H1>Wellspring Trains App</h1>
       <h2>Import</h2>
-    <form method="post" action="import.php">
+    <form method="post" action="import.php"  enctype="multipart/form-data">
       <input type="file" name="import_file"/>
       <input type="submit" value="import"/>
     </form>

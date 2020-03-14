@@ -7,4 +7,6 @@ $db_server = 'localhost';
 $db_user = 'your_username';
 $db_pass = 'your_password';
 $db_database = 'some_database';
+
+$debug = false;
 ?>

@@ -3,14 +3,16 @@ class database {
   protected $host;
   protected $user;
   private $password;
-  public $database;
+  public $db;
 
-  public function __construct($host, $user, $pass, $database) {
+  public function __construct($host, $user, $pass, $database, $debug = false) {
     $this->host = $host;
-    $this->$user = $user;
+    $this->user = $user;
     $this->password = $pass;
     $this->db = $database;
-    $this->test_connection();
+    if($debug){
+      $this->test_connection();
+    }
   }
 
   private function connect() {

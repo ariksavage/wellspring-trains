@@ -41,13 +41,17 @@ class database {
 
   public function insert($q){
     $this->query($q);
+    $affected = $this->connection->affected_rows;
+    if ($affected > 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   private function query($q){
     $this->connection->query($q);
   }
-
-  INSERT INTO `trains`(`id`, `train_line`, `route_name`, `run_number`, `operator_id`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5])
 
   public function escape_string($value) {
     return '\''.$this->connection->real_escape_string(trim($value)).'\'';

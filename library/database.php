@@ -13,6 +13,7 @@ class database {
     if($debug){
       $this->test_connection();
     }
+    $this->connect();
   }
 
   private function connect() {
@@ -23,6 +24,7 @@ class database {
       return false;
     }
   }
+
   protected function test_connection() {
     if ($this->connect()){
       echo "Success: A proper connection to $this->database was made!" . PHP_EOL;
@@ -37,7 +39,21 @@ class database {
     }
   }
 
-  private function disconnect() {
+  public function insert($q){
+    $this->query($q);
+  }
+
+  private function query($q){
+    $this->connection->query($q);
+  }
+
+  INSERT INTO `trains`(`id`, `train_line`, `route_name`, `run_number`, `operator_id`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5])
+
+  public function escape_string($value) {
+    return '\''.$this->connection->real_escape_string(trim($value)).'\'';
+  }
+
+  public function disconnect() {
     mysqli_close($this->connection);
   }
 }

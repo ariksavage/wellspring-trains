@@ -22,7 +22,7 @@
       require_once('../library/trains.php');
       $trains = new trains();
       $page = isset($_GET['page'])? $_GET['page'] : 1;
-      $order = isset($_GET['order'])? $_GET['order'] : null;
+      $order = isset($_GET['order'])? $_GET['order'] : 'run_number';
       $dir = isset($_GET['dir'])? $_GET['dir'] : 'asc';
       $routes = $trains->get_all_routes_paginated($page, $order, $dir);
     ?>

@@ -5,7 +5,7 @@ class trains {
     if(file_exists('../config.php')){
       require_once('../config.php');
       require_once('./library/database.php');
-      this->$db = new Database($db_server, $db_user, $db_pass, $db_database, $debug);
+      $this->$db = new Database($db_server, $db_user, $db_pass, $db_database, $debug);
     } else {
       echo "No configuration file found. Rename config_example.php to config.php and update its values.";
       die();

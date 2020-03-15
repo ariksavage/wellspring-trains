@@ -75,6 +75,12 @@ class trains {
     echo "<p>$n routes imported.</p>";
   }
 
+  public function count_routes() {
+    $query = "SELECT COUNT(*) AS count FROM trains";
+    $result = $this->db->select($query);
+    return $result[0]->count;
+  }
+
   public function get_all_routes_paginated($page = 1, $order_by = 'run_number', $order_dir = 'asc') {
     $limit = 5; // per page;
     $offset = $limit * ($page -1);

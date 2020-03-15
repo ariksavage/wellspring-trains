@@ -21,30 +21,38 @@
     <?php 
       require_once('../library/trains.php');
       $trains = new trains();
+      $limit = 5;
       $page = isset($_GET['page'])? $_GET['page'] : 1;
       $order = isset($_GET['order'])? $_GET['order'] : 'run_number';
       $dir = isset($_GET['dir'])? $_GET['dir'] : 'asc';
       $routes = $trains->get_all_routes_paginated($page, $order, $dir);
+      $total = $trains->count_routes();
+      $num_pages = ceil($total / $limit);
     ?>
     <table>
       <thead>
         <tr>
           <?php 
-            function sort_link($text, $column, $order, $dir, $page){
+            function sort_link($text, $column, $order, $dir, $page) {
               $link = "?order=$column";
-              if (($order == $column) && ($dir == 'asc')){
-                $dir = 'desc';
+
+              $symbol = ' ';
+              if (($order == $column) && ($dir == 'asc')) {
+                $symbol = ' ^';
+                $link .= "&dir=desc";
+              } else if (($order == $column) && ($dir == 'desc')) {
+                $symbol = ' v';
+                $link .= "&dir=asc";
               } else {
-                $dir = 'asc';
+                $link .= "&dir=asc";
               }
-              $link .= "&dir=$dir";
               $link .= "&page=$page";
-              return "<a href=\"$link\">$text</a>";
+              return "<a href=\"$link\">$text $symbol</a>";
             }
             
           ?>
           <th><?php echo sort_link('Train Line', 'train_line', $order, $dir, $page);?></th>
-          <th><?php echo sort_link('Route', 'route_number', $order, $dir, $page);?></th>
+          <th><?php echo sort_link('Route', 'route_name', $order, $dir, $page);?></th>
           <th><?php echo sort_link('Run Number', 'run_number', $order, $dir, $page);?></th>
           <th><?php echo sort_link('Operator ID', 'operator_id', $order, $dir, $page);?></th>
         </tr>
@@ -76,17 +84,33 @@
         <?php 
         $page_up = "?page=".($page + 1);
         $page_down = "?page=".($page - 1);
+        $page_first = "?page=1";
+        $page_last = "?page=".$num_pages;
         if ($order) {
-          $page_up .= '&order='.$order;
-          $page_down .= '&order='.$order;
+          $page_up .= "&order=$order";
+          $page_down .= "&order=$order";
+          $page_first .= "&order=$order";
+          $page_last .= "&order=$order";
+        }
+        if ($dir) {
+          $page_up .= "&dir=$dir";
+          $page_down .= "&dir=$dir";
+          $page_first .= "&dir=$dir";
+          $page_last .= "&dir=$dir";
         }
 
         if ($page > 1) {
-          echo '<a href="'.$page_down.'"> < </a>';
+          echo "<a href=\"$page_first\"> << </a>";
+          echo "<a href=\"$page_down\"> < </a>";
         }
-      ?>
-      <span class="page">Page <?php echo $page;?></span>
-      <a href="<?php echo ($page_up);?>"> > </a>
+
+        echo "<span class=\"page\">Page $page</span>";
+
+        if ($page < $num_pages){
+          echo "<a href=\"$page_up\"> > </a>";
+          echo "<a href=\"$page_last\"> >> </a>";
+        }
+        ?>
       </td>
     </tr>
   </tfoot>

@@ -11,6 +11,12 @@ class trains {
       die();
     }
   }
+  /**
+  * Import route data
+  * A route must contain 4 columns: train_line, route_name, run_number, operator_id
+  * Route will only be imported when it contains a unique combination of values
+  * All 4 values must be non-empty strings
+  */
   private function insert_route($route){
     if (!empty(trim($route[0])) && !empty(trim($route[1])) && !empty(trim($route[2])) && !empty(trim($route[3])) ){
       $line = $this->db->escape_string($route[0]);
@@ -40,7 +46,9 @@ class trains {
       return false;
     }
   }
-
+  /**
+   * Parse a CSV file, import each row as a route
+   */
   public function import_routes($file) {
     if ($file['type'] !== 'text/csv') {
       echo 'Uploaded file must be a CSV.';
@@ -65,5 +73,13 @@ class trains {
       }
     }
     echo "<p>$n routes imported.</p>";
+  }
+
+  public function get_all_routes_paginated($page = 1, $order_by = 'run_number', $order_dir = 'asc') {
+    $limit = 5; // per page;
+    $offset = $limit * ($page -1);
+    $query = "SELECT * FROM `trains` order by $order_by $order_dir limit $limit offset $offset";
+    $routes = $this->db->select($query);
+    return $routes;
   }
 }

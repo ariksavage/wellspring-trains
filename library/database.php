@@ -49,8 +49,25 @@ class database {
     }
   }
 
+  public function select($q) {
+    $data = [];
+    if ($result = $this->query($q)) {
+
+      /* fetch object array */
+      while ($row = $result->fetch_object()) {
+          $data[] = $row;
+      }
+
+      /* free result set */
+      $result->close();
+      return $data;
+    } else {
+      return false;
+    }
+  }
+
   private function query($q){
-    $this->connection->query($q);
+    return $this->connection->query($q);
   }
 
   public function escape_string($value) {

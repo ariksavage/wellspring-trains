@@ -1,20 +1,21 @@
+
 <?php
-  error_reporting(E_ALL);
-  ini_set("display_errors", 1);
+  if(isset($_FILES['import_file']) && $file = $_FILES['import_file']) {
+    $trains->import_routes($file);
+  }
 ?>
 
-  </!DOCTYPE html>
-  <html>
-
+</!DOCTYPE html>
+<html>
   <head>
     <title>Wellspring Trains Application Admin</title>
     <style>
-.missing td {
-  border: 1px solid #f00;
-  min-width: 5em;
-  height: 1.2em;
-}
-  </style>
+      .missing td {
+        border: 1px solid #f00;
+        min-width: 5em;
+        height: 1.2em;
+      }
+    </style>
   </head>
   <body>
 
@@ -58,63 +59,54 @@
         </tr>
       </thead>
       <tbody>
-
-    <?php
-      if(isset($_FILES['import_file']) && $file = $_FILES['import_file']) {
-        $trains->import_routes($file);
-      }
-      ?>
-    <h1>Wellspring Trains App</h1>
-    
-    <?php 
-    
-    foreach ($routes as $route){
-      echo '<tr>';
-      echo "<td>$route->train_line</td>";
-      echo "<td>$route->route_name</td>";
-      echo "<td>$route->run_number</td>";
-      echo "<td>$route->operator_id</td>";
-      echo '</tr>';
-    }
-    ?>
-  </tbody>
-  <tfoot>
-    <tr>
-      <td colspan="4">
         <?php 
-        $page_up = "?page=".($page + 1);
-        $page_down = "?page=".($page - 1);
-        $page_first = "?page=1";
-        $page_last = "?page=".$num_pages;
-        if ($order) {
-          $page_up .= "&order=$order";
-          $page_down .= "&order=$order";
-          $page_first .= "&order=$order";
-          $page_last .= "&order=$order";
-        }
-        if ($dir) {
-          $page_up .= "&dir=$dir";
-          $page_down .= "&dir=$dir";
-          $page_first .= "&dir=$dir";
-          $page_last .= "&dir=$dir";
-        }
-
-        if ($page > 1) {
-          echo "<a href=\"$page_first\"> << </a>";
-          echo "<a href=\"$page_down\"> < </a>";
-        }
-
-        echo "<span class=\"page\">Page $page</span>";
-
-        if ($page < $num_pages){
-          echo "<a href=\"$page_up\"> > </a>";
-          echo "<a href=\"$page_last\"> >> </a>";
-        }
+          foreach ($routes as $route){
+            echo '<tr>';
+            echo "<td>$route->train_line</td>";
+            echo "<td>$route->route_name</td>";
+            echo "<td>$route->run_number</td>";
+            echo "<td>$route->operator_id</td>";
+            echo '</tr>';
+          }
         ?>
-      </td>
-    </tr>
-  </tfoot>
-</table>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4">
+            <?php 
+            $page_up = "?page=".($page + 1);
+            $page_down = "?page=".($page - 1);
+            $page_first = "?page=1";
+            $page_last = "?page=".$num_pages;
+            if ($order) {
+              $page_up .= "&order=$order";
+              $page_down .= "&order=$order";
+              $page_first .= "&order=$order";
+              $page_last .= "&order=$order";
+            }
+            if ($dir) {
+              $page_up .= "&dir=$dir";
+              $page_down .= "&dir=$dir";
+              $page_first .= "&dir=$dir";
+              $page_last .= "&dir=$dir";
+            }
+
+            if ($page > 1) {
+              echo "<a href=\"$page_first\"> << </a>";
+              echo "<a href=\"$page_down\"> < </a>";
+            }
+
+            echo "<span class=\"page\">Page $page</span>";
+
+            if ($page < $num_pages){
+              echo "<a href=\"$page_up\"> > </a>";
+              echo "<a href=\"$page_last\"> >> </a>";
+            }
+            ?>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
     <h2>Import</h2>
     <form method="post" action="" enctype="multipart/form-data">
       <input type="file" name="import_file"/>

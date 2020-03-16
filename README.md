@@ -4,14 +4,16 @@
 Visit http://ec2-3-21-28-142.us-east-2.compute.amazonaws.com/ for the displayed route data, as imported from the provided CSV. Each column heading is clickable to sort by that column. First click will display data ascending, and second click on the same column will show it descending. Pagination is provided at the table's footer. Each page will show up to 5 items. 
 - << goes to the first page. 
 - < goes to the previous page. 
-- > goes to the next page. 
-- >> goes to the last page.
+- \> goes to the next page. 
+- \>\> goes to the last page.
 
 Seed data is being included in the hosted set for ease of testing.
 
 Visit http://ec2-3-21-28-142.us-east-2.compute.amazonaws.com/admin to access the CSV import functionality. Enter a CSV file into the form to append new data to the routes available. Routes will only be imported when all four fields are present, and when that combination of items doesn't already exist in the database. See assumptions below.
 
-##Assumptions
+See sql/trains.sql for an example of the database structure.
+
+## Assumptions
 
 
 ### Data
